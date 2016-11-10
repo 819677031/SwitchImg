@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>switch photo</title>
+	<style type="text/css">
+		p{margin: 0;} 
+		body{text-align: center;}
+		#content{width: 400px; height: 400px;border: 10px solid #ccc; margin:50px auto 0; position: relative;}
+		a{width: 40px; height: 40px; background: #fff;filter: alpha(opacity 30);opacity: 0.3;position: absolute;top: 160px;font-size: 18px;color: #000;text-align: center;line-height: 40px;text-decoration: none;}
+		a:hover{filter:alpha(opacity 80);opacity: 0.8; }
+		#prev { left:10px; }
+		#next { right:10px; }
+		span { position:absolute; width:400px; height:30px; line-height:30px; text-align:center; top:-50px; left:0; font-family:'微软雅黑'; }
+		p { width:400px; height:30px; line-height:30px; text-align:center; background:#000; color:#fff; font-size:14px; filter:alpha(opacity:80); opacity:0.8; position:absolute; bottom:0; left:0; }
+		strong { width:400px; height:30px; line-height:30px; text-align:center; background:#000; color:#fff; font-size:14px; filter:alpha(opacity:80); opacity:0.8; position:absolute; top:0; left:0; }
+		#img{width: 400px; height: 400px;}
+	</style>
+	<script type="text/javascript">
+	window.onload = function (){
+		var oPrev = document.getElementById('prev');
+		var oNext = document.getElementById('next');
+		var oP = document.getElementById('p1');
+		var oStrong = document.getElementById('strong1');
+		var oImg = document.getElementById('img');
+		var oSpan = document.getElementById('span1');
+
+		var arrUrl = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+		var arrText = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+		var oBtn = document.getElementsByTagName('input');
+		var onOff = true;
+		oBtn[0].onclick = function(){
+			onOff = true;
+			oSpan.innerHTML = '图片可以循环播放';
+		};
+		oBtn[1].onclick = function(){
+			onOff = false;
+			oSpan.innerHTML = '图片可以顺序播放';
+		};
+
+		var num=0;
+		function Tab(){
+			oImg.src = arrUrl[num];
+			oP.innerHTML = arrText[num];
+			oStrong.innerHTML = num+1 + ' / ' +arrUrl.length;
+		}
+		Tab();
+		oPrev.onclick = function(){
+			num--;
+			if (num==-1) {
+				if (onOff) {
+					num = arrUrl.length-1;
+				}else{
+					num = 0;
+					oSpan.innerHTML ='这已经是第一张了哦';
+				}
+			}
+			Tab();
+		}
+		oNext.onclick = function(){
+			num++;
+			if (num==arrUrl.length) {
+				if (onOff) {
+					num = 0;
+				}else{
+					num = 3;
+					oSpan.innerHTML = '这已经是最后一张了哦';
+				}
+			}
+			Tab();
+		}
+	};
+	</script>
+</head>
+<body>
+	<input type="button" value="循环播放">
+	<input type="button" value="顺序播放">
+	<div id="content"><span id="span1">图片从第一张切换到最后一张</span>
+		<a id="prev" href="javascript:;"><</a>
+		<a id="next" href="javascript:;">></a>
+		<p id="p1">图片文字加载中……</p>
+  		<strong id="strong1">图片数量计算中……</strong>
+		<img id="img">
+	</div>
+	
+
+</body>
+</html>
